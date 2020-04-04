@@ -7,7 +7,7 @@ spring:
   servlet:
     multipart:
       max-file-size: 10240KB
-      max-request-size: 10240KB
+      max-request-size: 10240KB #最大请求大小
   jackson:
     time-zone: GMT+8
     date-format: yyyy-MM-dd HH:mm:ss:sss
