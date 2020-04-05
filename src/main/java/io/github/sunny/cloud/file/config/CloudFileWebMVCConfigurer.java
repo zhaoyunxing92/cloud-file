@@ -29,9 +29,18 @@ import java.util.List;
  */
 @Configuration
 public class CloudFileWebMVCConfigurer implements WebMvcConfigurer {
+    /**
+     * 排除不拦截的url
+     */
+    private static String[] excludePathPatterns = {"/", "/wang", "/error", "/favicon.ico", "/index.html", "/login", "/wechat/openid"};
+
     @Override
     public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**").allowedOrigins("*").allowCredentials(true).allowedMethods("GET", "POST", "DELETE", "PUT").maxAge(3600);
+        registry.addMapping("/**")
+                .allowedOrigins("*")
+                .allowCredentials(true)
+                .allowedMethods("GET", "POST", "DELETE", "PUT")
+                .maxAge(3600);
 
     }
 
@@ -42,7 +51,9 @@ public class CloudFileWebMVCConfigurer implements WebMvcConfigurer {
      */
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new CloudFileInterceptor()).addPathPatterns("/**").excludePathPatterns("/", "/wang", "/error", "/favicon.ico", "/index.html", "/login");
+        registry.addInterceptor(new CloudFileInterceptor())
+                .addPathPatterns("/**")
+                .excludePathPatterns(excludePathPatterns);
     }
 
     /**
@@ -59,11 +70,12 @@ public class CloudFileWebMVCConfigurer implements WebMvcConfigurer {
         FastJsonHttpMessageConverter fastConverter = new FastJsonHttpMessageConverter();
         FastJsonConfig fastJsonConfig = new FastJsonConfig();
         SerializerFeature[] serializerFeatures = new SerializerFeature[]{
-                SerializerFeature.WriteMapNullValue,
+
+                //SerializerFeature.WriteMapNullValue,
                 // SerializerFeature.WriteNullNumberAsZero,
-                SerializerFeature.WriteNullListAsEmpty,
-                SerializerFeature.WriteNullStringAsEmpty,
-                SerializerFeature.WriteNullBooleanAsFalse,
+                //SerializerFeature.WriteNullListAsEmpty,
+                //SerializerFeature.WriteNullStringAsEmpty,
+                //SerializerFeature.WriteNullBooleanAsFalse,
                 SerializerFeature.WriteDateUseDateFormat, //yyyy-MM-dd HH:mm:ss
                 SerializerFeature.DisableCircularReferenceDetect,
         };
