@@ -32,7 +32,7 @@ public class CloudFileWebMVCConfigurer implements WebMvcConfigurer {
     /**
      * 排除不拦截的url
      */
-    private static String[] excludePathPatterns = {"/", "/wang", "/error", "/favicon.ico", "/index.html", "/login", "/wechat/openid"};
+    private static String[] excludePathPatterns = {"/", "/wang", "/error", "/favicon.ico", "/index.html", "/login", "/wechat/openid", "/account/check/**"};
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
