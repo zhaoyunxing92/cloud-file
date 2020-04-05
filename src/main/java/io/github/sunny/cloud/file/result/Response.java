@@ -16,7 +16,7 @@ import java.io.Serializable;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Response implements Serializable {
+public class Response<T> implements Serializable {
     /**
      * code编码
      */
@@ -28,10 +28,10 @@ public class Response implements Serializable {
     /**
      * 数据
      */
-    private Object data;
+    private T data;
 
-    public static Response of(Integer code, String msg, Object data) {
-        return new Response(code, msg, data);
+    public static <T> Response<T> of(Integer code, String msg, T data) {
+        return new Response<>(code, msg, data);
     }
 
     /**
@@ -41,22 +41,22 @@ public class Response implements Serializable {
      * @param data 数据
      * @return
      */
-    public static Response of(String msg, Object data) {
-        return new Response(0, msg, data);
+    public static <T> Response<T> of(String msg, T data) {
+        return new Response<>(0, msg, data);
     }
 
     /**
      * 成功code=0
      *
-     * @param msg  成功消息
+     * @param data 成功消息
      * @param data 数据
      * @return
      */
-    public static Response of(Object data) {
-        return new Response(0, "ok", data);
+    public static <T> Response<T> of(T data) {
+        return new Response<>(0, "ok", data);
     }
 
-    public static Response of(Integer code, String msg) {
-        return new Response(code, msg, null);
+    public static <T> Response<T> of(Integer code, String msg) {
+        return new Response<>(code, msg, null);
     }
 }
