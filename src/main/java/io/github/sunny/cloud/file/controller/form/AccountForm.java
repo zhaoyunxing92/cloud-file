@@ -27,16 +27,16 @@ public class AccountForm implements Serializable {
     @NotBlank(message = "请输入用户名")
     private String userName;
 
-    /**
-     * 邮箱
-     */
-    @NotBlank(message = "请输入邮箱")
-    private String emil;
-
-    /**
-     * 手机号
-     */
-    private String mobile;
+//    /**
+//     * 邮箱
+//     */
+//    @NotBlank(message = "请输入邮箱")
+//    private String emil;
+//
+//    /**
+//     * 手机号
+//     */
+//    private String mobile;
 
     /**
      * 昵称

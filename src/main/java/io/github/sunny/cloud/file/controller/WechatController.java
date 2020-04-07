@@ -40,13 +40,13 @@ public class WechatController {
     }
 
     /**
-     * 注册小程序用户
+     * 注册活登录小程序用户
      *
      * @param form 表单数据
      * @return openid
      */
     @PostMapping("/register")
-    public ResponseEntity<Object> register(@RequestBody @Validated AccountForm form) {
-        return ResponseEntity.ok(accountService.insertAccount(form));
+    public ResponseEntity<Object> registerOrLogin(@RequestBody @Validated AccountForm form) {
+        return ResponseEntity.ok(accountService.registerOrLogin(form));
     }
 }

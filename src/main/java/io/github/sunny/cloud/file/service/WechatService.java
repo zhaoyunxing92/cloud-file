@@ -63,7 +63,7 @@ public class WechatService {
                 } else {
                     account = new AccountModel();
                     account.setOpenId(openId);
-                    return Response.of(401, "获取openid成功", account);
+                    return Response.of(403, "获取openid成功", account);
                 }
             case -1:
                 return Response.of(-1, "系统繁忙，此时请开发者稍候再试");

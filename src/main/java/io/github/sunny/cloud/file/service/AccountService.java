@@ -11,6 +11,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import javax.validation.constraints.NotBlank;
+import java.util.Date;
 import java.util.Optional;
 
 /**
@@ -31,23 +32,12 @@ public class AccountService {
      * @return
      */
     public Response<AccountModel> insertAccount(AccountForm form) {
-        //检查用户名是否存在
-        String userName = form.getUserName();
-        Response<AccountModel> res = getAccountByUserName(userName);
-        if (res.getData() != null) {
-            return Response.of(-6, String.format("账号[%s]已经存在", userName));
-        }
-
-        //检查openid是否存在
-        String openId = form.getOpenId();
-        res = getAccountByOpenId(openId);
-        if (res.getData() != null) {
-            return Response.of(-7, String.format("openid[%s]已经存在", openId));
-        }
 
         try {
             AccountModel model = new AccountModel();
             BeanUtils.copyProperties(form, model);
+            model.setCreateTime(new Date());
+            model.setModifierTime(new Date());
             accountRepository.insert(model);
             return Response.of(model);
         } catch (Exception ex) {
@@ -89,6 +79,21 @@ public class AccountService {
         Optional<AccountModel> opt = accountRepository.findAccountModelByUserName(userName);
         AccountModel model = opt.orElse(null);
         return Response.of(model);
+    }
+
+    public Response<AccountModel> registerOrLogin(AccountForm form) {
+        //检查用户名是否存在
+        String userName = form.getUserName();
+        Response<AccountModel> res = getAccountByUserName(userName);
+        AccountModel account = res.getData();
+        if (account != null) {
+            if (form.getPassword().equals(account.getPassword())) {
+                return Response.of(0, "登录成功", account);
+            }
+            return Response.of(-6, "账号或密码不正确");
+        }
+
+        return insertAccount(form);
     }
     //根据token获取
     //注册
