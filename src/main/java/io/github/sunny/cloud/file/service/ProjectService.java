@@ -9,6 +9,11 @@ import io.github.sunny.cloud.file.repository.ProjectRepository;
 import io.github.sunny.cloud.file.result.Response;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
+
+import javax.validation.constraints.NotBlank;
+import java.util.List;
+import java.util.Optional;
 
 /**
  * 项目服务
@@ -34,6 +39,49 @@ public class ProjectService {
         ProjectModel model = new ProjectModel();
         BeanUtils.copyProperties(form, model);
         projectRepository.insert(model);
+        return Response.of(model);
+    }
+
+    /**
+     * 获取全部项目
+     *
+     * @return List<ProjectModel>
+     */
+    public Response<List<ProjectModel>> projects() {
+
+        return Response.of(projectRepository.findAll());
+    }
+
+    /**
+     * 更新项目
+     *
+     * @param id   更新数据
+     * @param form 表单数据
+     * @return
+     */
+    public Response<ProjectModel> update(String id, ProjectForm form) {
+
+        Optional<ProjectModel> opt = projectRepository.findById(id);
+        ProjectModel model = opt.orElseGet(null);
+
+        if (model == null) {
+            return Response.of(-10, String.format("[%s]不存在", id));
+        }
+        BeanUtils.copyProperties(form,model);
+        model.setId(id);
+//        String name = form.getName();
+        //        if (!StringUtils.isEmpty(name)) {
+        //            model.setName(name);
+        //        }
+        //
+        //        String desc = form.getDesc();
+        //        if (!StringUtils.isEmpty(desc)) {
+        //            model.setDesc(desc);
+        //        }
+
+
+
+        projectRepository.save(model);
         return Response.of(model);
     }
 }
