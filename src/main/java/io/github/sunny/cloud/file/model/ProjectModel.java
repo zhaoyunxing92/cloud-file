@@ -24,6 +24,10 @@ public class ProjectModel extends BaseModel<String> {
      */
     private String name;
     /**
+     * 项目名称颜色
+     */
+    private String nameColor;
+    /**
      * 项目描述
      */
     private String desc;
@@ -31,6 +35,7 @@ public class ProjectModel extends BaseModel<String> {
      * 背景颜色
      */
     private String bgColor;
+
     /**
      * 创建者
      */
