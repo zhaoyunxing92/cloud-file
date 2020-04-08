@@ -32,7 +32,7 @@ public class ProjectController {
      * @param form 表单数据
      * @return ProjectModel
      */
-    @PutMapping
+    @PostMapping
     public Response<ProjectModel> addProject(@RequestBody @Validated ProjectForm form) {
         return projectService.insert(form);
     }

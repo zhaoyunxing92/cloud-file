@@ -4,18 +4,19 @@
 package io.github.sunny.cloud.file.controller.form;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
-import java.io.Serializable;
 
 /**
  * @author zhaoyunxing92
  * @date: 2020-04-05 21:07
  */
 @Data
+@EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
-public class AccountForm implements Serializable {
+public class AccountForm extends BaseForm {
     /**
      * 微信用户的openid
      */

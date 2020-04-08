@@ -4,14 +4,15 @@
 package io.github.sunny.cloud.file.service;
 
 import io.github.sunny.cloud.file.controller.form.ProjectForm;
+import io.github.sunny.cloud.file.model.AccountModel;
 import io.github.sunny.cloud.file.model.ProjectModel;
+import io.github.sunny.cloud.file.model.base.UserModel;
 import io.github.sunny.cloud.file.repository.ProjectRepository;
 import io.github.sunny.cloud.file.result.Response;
+import io.github.sunny.cloud.file.utils.AccountThreadLocal;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 
-import javax.validation.constraints.NotBlank;
 import java.util.List;
 import java.util.Optional;
 
@@ -38,6 +39,9 @@ public class ProjectService {
 
         ProjectModel model = new ProjectModel();
         BeanUtils.copyProperties(form, model);
+        UserModel user = AccountThreadLocal.get();
+        model.setManagers(user);
+        model.setCreator(user);
         projectRepository.insert(model);
         return Response.of(model);
     }
@@ -57,7 +61,7 @@ public class ProjectService {
      *
      * @param id   更新数据
      * @param form 表单数据
-     * @return
+     * @return ProjectModel
      */
     public Response<ProjectModel> update(String id, ProjectForm form) {
 
@@ -67,9 +71,9 @@ public class ProjectService {
         if (model == null) {
             return Response.of(-10, String.format("[%s]不存在", id));
         }
-        BeanUtils.copyProperties(form,model);
+        BeanUtils.copyProperties(form, model);
         model.setId(id);
-//        String name = form.getName();
+        //        String name = form.getName();
         //        if (!StringUtils.isEmpty(name)) {
         //            model.setName(name);
         //        }
@@ -78,7 +82,6 @@ public class ProjectService {
         //        if (!StringUtils.isEmpty(desc)) {
         //            model.setDesc(desc);
         //        }
-
 
 
         projectRepository.save(model);

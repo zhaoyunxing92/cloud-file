@@ -5,6 +5,7 @@ package io.github.sunny.cloud.file.service;
 
 import io.github.sunny.cloud.file.controller.form.AccountForm;
 import io.github.sunny.cloud.file.model.AccountModel;
+import io.github.sunny.cloud.file.model.base.UserModel;
 import io.github.sunny.cloud.file.repository.AccountRepository;
 import io.github.sunny.cloud.file.result.Response;
 import org.springframework.beans.BeanUtils;
@@ -29,20 +30,18 @@ public class AccountService {
      * 添加账号
      *
      * @param form 表单数据
-     * @return
+     * @return UserModel
      */
-    public Response<AccountModel> insertAccount(AccountForm form) {
+    public Response<UserModel> insertAccount(AccountForm form) {
 
         try {
             AccountModel model = new AccountModel();
             BeanUtils.copyProperties(form, model);
-            model.setCreateTime(new Date());
-            model.setModifierTime(new Date());
             accountRepository.insert(model);
-            model.setCreateTime(null);
-            model.setModifierTime(null);
-            model.setPassword(null);
-            return Response.of(model);
+            //数据清理
+            UserModel user = new UserModel();
+            BeanUtils.copyProperties(model, user);
+            return Response.of(user);
         } catch (Exception ex) {
             return Response.of(-5, ex.getMessage());
         }
@@ -84,17 +83,16 @@ public class AccountService {
         return Response.of(model);
     }
 
-    public Response<AccountModel> registerOrLogin(AccountForm form) {
+    public Response<UserModel> registerOrLogin(AccountForm form) {
         //检查用户名是否存在
         String userName = form.getUserName();
         Response<AccountModel> res = getAccountByUserName(userName);
         AccountModel account = res.getData();
         if (account != null) {
             if (form.getPassword().equals(account.getPassword())) {
-                account.setCreateTime(null);
-                account.setModifierTime(null);
-                account.setPassword(null);
-                return Response.of(0, "登录成功", account);
+                UserModel user = new UserModel();
+                BeanUtils.copyProperties(account, user);
+                return Response.of(0, "登录成功", user);
             }
             return Response.of(-6, "账号或密码不正确");
         }

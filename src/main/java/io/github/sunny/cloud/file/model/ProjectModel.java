@@ -4,6 +4,7 @@
 package io.github.sunny.cloud.file.model;
 
 import io.github.sunny.cloud.file.model.base.BaseModel;
+import io.github.sunny.cloud.file.model.base.UserModel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -39,9 +40,9 @@ public class ProjectModel extends BaseModel<String> {
     /**
      * 创建者
      */
-    private AccountModel creator;
+    private UserModel creator;
     /**
      * 管理者
      */
-    private AccountModel managers;
+    private UserModel managers;
 }

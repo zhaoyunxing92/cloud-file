@@ -34,8 +34,8 @@ public class WechatController {
      * @param code 小程序生成的code
      * @return openid
      */
-    @GetMapping("/{code}")
-    public ResponseEntity<Object> getAccountByCode(@PathVariable String code) {
+    @GetMapping("/code")
+    public ResponseEntity<Object> getAccountByCode(String code) {
         return ResponseEntity.ok(wechatService.getAccountByCode(code));
     }
 

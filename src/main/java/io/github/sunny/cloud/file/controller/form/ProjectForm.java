@@ -4,18 +4,19 @@
 package io.github.sunny.cloud.file.controller.form;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
-import java.io.Serializable;
 
 /**
  * @author zhaoyunxing92
  * @date: 2020-04-06 21:47
  */
 @Data
+@EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
-public class ProjectForm implements Serializable {
+public class ProjectForm extends BaseForm {
     /**
      * 项目名称
      */

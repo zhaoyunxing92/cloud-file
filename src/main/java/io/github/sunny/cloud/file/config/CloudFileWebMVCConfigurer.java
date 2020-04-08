@@ -16,7 +16,6 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +31,7 @@ public class CloudFileWebMVCConfigurer implements WebMvcConfigurer {
     /**
      * 排除不拦截的url
      */
-    private static String[] excludePathPatterns = {"/", "/wang", "/error", "/favicon.ico", "/index.html", "/login", "/wechat/openid", "/account/check/**"};
+    private static String[] excludePathPatterns = {"/", "/wang", "/error", "/favicon.ico", "/index.html", "/login", "/wechat/code", "/account/check/**"};
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
