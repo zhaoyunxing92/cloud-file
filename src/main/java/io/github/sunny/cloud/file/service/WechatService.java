@@ -59,6 +59,9 @@ public class WechatService {
                 Response<AccountModel> res = accountService.getAccountByOpenId(openId);
                 AccountModel account = res.getData();
                 if (account != null) {
+                    account.setCreateTime(null);
+                    account.setModifierTime(null);
+                    account.setPassword(null);
                     return Response.of("openid登录成功", account);
                 } else {
                     account = new AccountModel();

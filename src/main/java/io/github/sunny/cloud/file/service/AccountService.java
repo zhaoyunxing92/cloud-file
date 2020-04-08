@@ -39,6 +39,9 @@ public class AccountService {
             model.setCreateTime(new Date());
             model.setModifierTime(new Date());
             accountRepository.insert(model);
+            model.setCreateTime(null);
+            model.setModifierTime(null);
+            model.setPassword(null);
             return Response.of(model);
         } catch (Exception ex) {
             return Response.of(-5, ex.getMessage());
@@ -88,6 +91,9 @@ public class AccountService {
         AccountModel account = res.getData();
         if (account != null) {
             if (form.getPassword().equals(account.getPassword())) {
+                account.setCreateTime(null);
+                account.setModifierTime(null);
+                account.setPassword(null);
                 return Response.of(0, "登录成功", account);
             }
             return Response.of(-6, "账号或密码不正确");
