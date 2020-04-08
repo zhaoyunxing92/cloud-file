@@ -51,7 +51,7 @@ public class CloudFileInterceptor implements HandlerInterceptor {
             AccountModel account = resp.getData();
             if (account == null) {
                 res.setStatus(UNAUTHORIZED.value());
-                res.getWriter().write(JSONObject.toJSONString(Response.of(-402, "请先登录")));
+                res.getWriter().write(JSONObject.toJSONString(Response.of(402, "请先登录")));
                 return false;
             }
             //清除冗余数据
@@ -61,7 +61,7 @@ public class CloudFileInterceptor implements HandlerInterceptor {
             return true;
         } else {
             res.setStatus(UNAUTHORIZED.value());
-            res.getWriter().write(JSONObject.toJSONString(Response.of(-401, "请先登录")));
+            res.getWriter().write(JSONObject.toJSONString(Response.of(401, "请先登录")));
             return false;
         }
     }

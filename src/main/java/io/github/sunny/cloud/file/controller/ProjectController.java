@@ -61,6 +61,14 @@ public class ProjectController {
     }
 
 
-    //修改
-    //删除
+    /**
+     * 根据id删除
+     *
+     * @param id 项目id
+     * @return String
+     */
+    @DeleteMapping("/{id}")
+    public Response<String> deleteProject(@PathVariable String id) {
+        return projectService.removeProject(id);
+    }
 }

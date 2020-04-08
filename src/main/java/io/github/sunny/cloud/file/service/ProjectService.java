@@ -11,6 +11,7 @@ import io.github.sunny.cloud.file.repository.ProjectRepository;
 import io.github.sunny.cloud.file.result.Response;
 import io.github.sunny.cloud.file.utils.AccountThreadLocal;
 import org.springframework.beans.BeanUtils;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -52,8 +53,8 @@ public class ProjectService {
      * @return List<ProjectModel>
      */
     public Response<List<ProjectModel>> projects() {
-
-        return Response.of(projectRepository.findAll());
+        Sort sort = new Sort(Sort.Direction.DESC, "createTime");
+        return Response.of(projectRepository.findAll(sort));
     }
 
     /**
@@ -86,5 +87,16 @@ public class ProjectService {
 
         projectRepository.save(model);
         return Response.of(model);
+    }
+
+    /**
+     * 删除项目
+     *
+     * @param id 项目id
+     * @return String
+     */
+    public Response<String> removeProject(String id) {
+        projectRepository.deleteById(id);
+        return Response.of(0, "删除成功");
     }
 }
